@@ -1,14 +1,16 @@
 package com.cenna.creditapplicationsystem.dto
 
 import com.cenna.creditapplicationsystem.entity.Customer
+import jakarta.validation.constraints.NotEmpty
+import jakarta.validation.constraints.NotNull
 import java.math.BigDecimal
 
 data class CustomerUpdateDto(
-    val firstName: String,
-    val lastName: String,
-    val income: BigDecimal,
-    val zipCode: String,
-    val street: String
+    @field:NotEmpty(message = "Input invalido.") val firstName: String,
+    @field:NotEmpty(message = "Input invalido.") val lastName: String,
+    @field:NotNull(message = "Input invalido.") val income: BigDecimal,
+    @field:NotEmpty(message = "Input invalido.") val zipCode: String,
+    @field:NotEmpty(message = "Input invalido.") val street: String
 ) {
 
     fun toEntity(customer: Customer): Customer {
