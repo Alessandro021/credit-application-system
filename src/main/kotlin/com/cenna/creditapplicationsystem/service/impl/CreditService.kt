@@ -1,6 +1,7 @@
 package com.cenna.creditapplicationsystem.service.impl
 
 import com.cenna.creditapplicationsystem.entity.Credit
+import com.cenna.creditapplicationsystem.exception.BusinessException
 import com.cenna.creditapplicationsystem.repository.CreditRepository
 import com.cenna.creditapplicationsystem.service.ICreditService
 import org.springframework.stereotype.Service
@@ -23,12 +24,12 @@ class CreditService(
     }
 
     override fun findByCreditCode(customerId: Long, creditCode: UUID): Credit {
-        val credit: Credit = (this.creditRepository.findByCreditCode(creditCode) ?: throw RuntimeException("CreditCode $creditCode não existe."))
+        val credit: Credit = (this.creditRepository.findByCreditCode(creditCode) ?: throw BusinessException("CreditCode $creditCode não existe."))
 
         return if(credit.customer?.id == customerId){
             credit
         } else {
-            throw RuntimeException("Contate o adimistrador.")
+            throw IllegalArgumentException("Contate o adimistrador.")
         }
     }
 }

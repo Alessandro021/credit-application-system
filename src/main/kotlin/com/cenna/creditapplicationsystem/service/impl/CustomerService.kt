@@ -1,6 +1,7 @@
 package com.cenna.creditapplicationsystem.service.impl
 
 import com.cenna.creditapplicationsystem.entity.Customer
+import com.cenna.creditapplicationsystem.exception.BusinessException
 import com.cenna.creditapplicationsystem.repository.CustomerRepository
 import com.cenna.creditapplicationsystem.service.ICustomerService
 import org.springframework.stereotype.Service
@@ -15,11 +16,12 @@ class CustomerService(
 
     override fun findById(id: Long): Customer {
        return this.customerRepository.findById(id).orElseThrow{
-           throw RuntimeException("ID $id não existe")
+           throw BusinessException("ID $id não existe")
        }
     }
 
     override fun delete(id: Long) {
-        return this.customerRepository.deleteById(id)
+        val customer: Customer  = this.findById(id)
+        this.customerRepository.delete(customer)
     }
 }
