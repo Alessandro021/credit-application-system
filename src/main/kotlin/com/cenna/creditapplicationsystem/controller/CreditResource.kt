@@ -1,12 +1,16 @@
 package com.cenna.creditapplicationsystem.controller
 
 import com.cenna.creditapplicationsystem.dto.CreditDto
+import com.cenna.creditapplicationsystem.dto.CreditListView
 import com.cenna.creditapplicationsystem.entity.Credit
 import com.cenna.creditapplicationsystem.service.impl.CreditService
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
+import java.util.stream.Collectors
 
 @RestController
 @RequestMapping("/api/credits")
@@ -18,4 +22,10 @@ class CreditResource(
        val credit: Credit =  this.creditService.save(creditDto.toEntity())
         return "Credito ${credit.creditCode} - Cliente ${credit.customer?.firstName} criado."
     }
+
+    @GetMapping
+    fun findAllByCustomerId(@RequestParam(value = "customerId") customerId: Long): List<CreditListView> {
+        return this.creditService.findAllByCustomer(customerId).stream().map { credit: Credit -> CreditListView(credit) }.collect(Collectors.toList())
+    }
+
 }
