@@ -29,14 +29,14 @@ class CustomerResource(
         return ResponseEntity.status(HttpStatus.CREATED).body("Cliente ${saveCustomer.email} salvo com sucesso.")
     }
 
-    @GetMapping("/id")
+    @GetMapping("/{id}")
     fun findById(@PathVariable id: Long): ResponseEntity<CustomerView> {
         val customer: Customer = this.customerService.findById(id)
 
         return ResponseEntity.status(HttpStatus.OK).body(CustomerView(customer))
     }
 
-    @DeleteMapping("/id")
+    @DeleteMapping("/{id}")
     fun deleteCustomer(@PathVariable id: Long) {
         return this.customerService.delete(id)
     }
