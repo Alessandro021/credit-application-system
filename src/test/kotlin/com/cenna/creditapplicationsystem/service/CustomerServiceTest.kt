@@ -20,7 +20,7 @@ import java.math.BigDecimal
 import java.util.Optional
 import java.util.Random
 
-@ActiveProfiles("test")
+//@ActiveProfiles("test")
 @ExtendWith(MockKExtension::class)
 class CustomerServiceTest {
     @MockK lateinit var customerRepository: CustomerRepository
